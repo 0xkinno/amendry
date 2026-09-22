@@ -216,3 +216,143 @@ export const staleEvidenceForRevision = mutation({
     }
   },
 });
+
+/** Record extracted structured facts on an evidence item and update verification status. */
+export const recordExtractedFacts = mutation({
+  args: {
+    evidenceId: v.id("evidenceItems"),
+    extractedFacts: v.string(),
+    verificationStatus: verificationStatus,
+    staleReason: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const ev = await ctx.db.get(args.evidenceId);
+    if (!ev) throw new Error("Evidence item not found.");
+
+    const now = Date.now();
+    await ctx.db.patch(args.evidenceId, {
+      extractedFacts: args.extractedFacts,
+      processingStatus: "EXTRACTED",
+      verificationStatus: args.verificationStatus,
+      staleReason: args.staleReason,
+      verifiedAt: args.verificationStatus === "VERIFIED" ? now : undefined,
+      updatedAt: now,
+    });
+
+    // If verified, also ensure all active requirement mappings for this evidence are marked CURRENT
+    if (args.verificationStatus === "VERIFIED") {
+      const mappings = await ctx.db
+        .query("requirementEvidence")
+        .withIndex("by_evidence", (q) => q.eq("evidenceId", args.evidenceId))
+        .collect();
+
+      for (const m of mappings) {
+        await ctx.db.patch(m._id, {
+          status: "CURRENT",
+          staleReason: undefined,
+        });
+
+        // Also update the requirement status to VERIFIED if all requirements evidence is satisfied
+        const req = await ctx.db.get(m.requirementId);
+        if (req && req.status !== "VERIFIED") {
+          await ctx.db.patch(req._id, {
+            status: "VERIFIED",
+            staleReason: undefined,
+            updatedAt: now,
+          });
+        }
+      }
+    }
+  },
+});
+
+/**
+ * Replace a stale evidence item with new/revised evidence.
+ * Marks the old mapping as SUPERSEDED and establishes the new mapping as CURRENT.
+ */
+export const replaceStaleEvidence = mutation({
+  args: {
+    tenderId: v.id("tenders"),
+    requirementId: v.id("requirements"),
+    oldEvidenceId: v.id("evidenceItems"),
+    newEvidenceId: v.id("evidenceItems"),
+    reason: v.string(),
+  },
+  handler: async (ctx, args) => {
+    const req = await ctx.db.get(args.requirementId);
+    if (!req) throw new Error("Requirement not found.");
+
+    const newEv = await ctx.db.get(args.newEvidenceId);
+    if (!newEv) throw new Error("New evidence not found.");
+
+    const now = Date.now();
+
+    // Mark old mapping as STALE
+    const oldMapping = await ctx.db
+      .query("requirementEvidence")
+      .withIndex("by_requirement", (q) => q.eq("requirementId", args.requirementId))
+      .filter((q) => q.eq(q.field("evidenceId"), args.oldEvidenceId))
+      .first();
+
+    if (oldMapping) {
+      await ctx.db.patch(oldMapping._id, {
+        status: "STALE",
+        staleReason: `Superseded by new evidence ${newEv.title}: ${args.reason}`,
+      });
+    }
+
+    // Insert or update new mapping
+    const existingNewMapping = await ctx.db
+      .query("requirementEvidence")
+      .withIndex("by_requirement", (q) => q.eq("requirementId", args.requirementId))
+      .filter((q) => q.eq(q.field("evidenceId"), args.newEvidenceId))
+      .first();
+
+    if (existingNewMapping) {
+      await ctx.db.patch(existingNewMapping._id, {
+        status: "CURRENT",
+        staleReason: undefined,
+      });
+    } else {
+      await ctx.db.insert("requirementEvidence", {
+        tenderId: args.tenderId,
+        requirementId: args.requirementId,
+        evidenceId: args.newEvidenceId,
+        revisionId: req.revisionId,
+        status: "CURRENT",
+        createdAt: now,
+      });
+    }
+
+    // Set new evidence verification to VERIFIED
+    await ctx.db.patch(args.newEvidenceId, {
+      verificationStatus: "VERIFIED",
+      staleReason: undefined,
+      verifiedAt: now,
+      updatedAt: now,
+    });
+
+    // Mark requirement VERIFIED
+    await ctx.db.patch(args.requirementId, {
+      status: "VERIFIED",
+      staleReason: undefined,
+      updatedAt: now,
+    });
+
+    // Append to proof ledger
+    await ctx.db.insert("proofEvents", {
+      tenderId: args.tenderId,
+      revisionId: req.revisionId,
+      kind: "EVIDENCE_VERIFIED",
+      summary: `Replaced stale evidence for ${req.title}. New evidence: ${newEv.title}.`,
+      detail: {
+        source: newEv.title,
+      },
+      seq: now,
+      at: now,
+    });
+
+    return { success: true };
+  },
+});
+

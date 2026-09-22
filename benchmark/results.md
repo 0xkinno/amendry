@@ -1,6 +1,6 @@
 # AMENDRY Tender Integrity Benchmark Results
 
-**Generated**: 2026-09-22T13:47:03.515Z  
+**Generated**: 2026-09-22T17:19:18.737Z  
 **Corpus**: 12 High-Stakes Public Procurement Scenarios
 
 ## Executive Summary

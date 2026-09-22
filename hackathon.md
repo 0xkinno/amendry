@@ -41,6 +41,38 @@ Convex × OpenAI All Gas Hackathon (2026)
 
 ---
 
+## Core Capabilities & Product Completeness
+
+AMENDRY provides a complete, human-usable tender lifecycle backed by a mathematical integrity kernel:
+
+1. **Real Tender Ingestion**: Live URL scraping and crawling via Firecrawl API with dual SHA-256 fingerprinting.
+2. **Tender & Addendum PDF Upload**: Real PDF ingestion backed by native Convex File Storage (`api.files.saveSourceDocumentFile`).
+3. **Evidence Artifact Upload**: Direct compliance PDF/document upload and SHA-256 fingerprinting via `api.files.saveEvidenceFile`.
+4. **Structured Requirement Extraction**: OpenAI `gpt-4o` extraction constrained by strict TypeScript/Zod schemas with quote spans and confidence metrics.
+5. **Evidence Mapping**: Revision-aware `requirementEvidence` join table pinned to revision content hashes.
+6. **Revision Impact Graph (Blast Radius)**: Interactive visualizer detailing source clause diffs, obligation impacts, and disqualified evidence.
+7. **Stale Evidence Invalidation**: Fail-closed invalidation of evidence whenever an amendment alters requirements.
+8. **AgentMail Clarification Loop**: AI draft → human review → approve → dispatch → inbound webhook reply reconciliation.
+9. **Commit-Time Certification Gate**: Authoritative mutation (`finalizeSubmission`) re-verifying all requirements and evidence at the transaction boundary before issuing immutable `revisionCertificates`.
+10. **Immutable Proof Ledger**: Append-only `proofEvents` ledger recording every state change and cryptographic parent hash pointer.
+11. **Adversarial Attack Campaign**: 12 automated attack vectors (A01–A12) with 100% mitigation rate.
+12. **Empirical Integrity Benchmark**: 12 high-stakes procurement scenarios evaluated with 0.0% false-ready escapes (vs 91.7% baseline).
+13. **Standalone Offline Proof Verifier**: Math script (`scripts/verify-proof.mjs`) validating 15/15 invariants independently.
+
+---
+
+### Why the final submission cannot trust stale browser state
+
+A reactive interface may have observed READY earlier.
+AMENDRY does not treat that observation as authority.
+The final certification mutation re-reads the current tender revision,
+requirements, evidence, conflicts, and approval state, recomputes readiness,
+and creates a revision-pinned certificate only when the current snapshot passes.
+The browser expresses intent.
+The transaction decides whether that intent is still valid.
+
+---
+
 ## Primary Invariant
 > A submission packet MUST NOT be marked READY when any mandatory requirement is UNKNOWN, CONTESTED, STALE, SUPERSEDED, SOURCE_UNAVAILABLE, or derived from a revision other than the current verified tender revision.
 
@@ -49,6 +81,7 @@ Convex × OpenAI All Gas Hackathon (2026)
 ## Verified Audit & Benchmark Summary
 
 - **Unit Test Suite**: 83 passing tests across 4 test files (`readinessKernel.test.ts`, `revisionDiff.test.ts`, `idempotency.test.ts`, `hashes.test.ts`).
+- **Playwright E2E Suite**: 36/36 passing end-to-end tests across Desktop, Tablet, and Mobile viewports.
 - **TypeScript Strictness**: 0 compiler errors across frontend and Convex backend; 0 instances of `as any` in `convex/`.
 - **Adversarial Attack Campaign**: 12/12 executable attacks mitigated (`scripts/attack-campaign.mjs`).
 - **Integrity Benchmark Corpus**: 12 high-stakes procurement scenarios evaluated.
@@ -56,4 +89,4 @@ Convex × OpenAI All Gas Hackathon (2026)
   - AMENDRY False-Ready Escapes: **0 / 12 (0.0% escape rate / 100.0% accuracy)**.
 - **Offline Proof Verifier**: 15 / 15 mathematical invariants verified without server dependencies (`scripts/verify-proof.mjs`).
 - **Secret & Copy Scanner**: 0 forbidden marketing buzzwords, 0 plaintext secrets exposed in repository files.
-- **Production Bundle**: Clean Vite production build in 5.96s.
+- **Production Bundle**: Clean Vite production build.

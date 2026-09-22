@@ -136,6 +136,10 @@ export default defineSchema({
     markdownLength: v.number(),
     isFixture: v.boolean(),
     mode: sourceMode,
+    storageId: v.optional(v.id("_storage")),
+    filename: v.optional(v.string()),
+    fileSize: v.optional(v.number()),
+    mimeType: v.optional(v.string()),
   })
     .index("by_tender", ["tenderId", "fetchedAt"])
     .index("by_hash", ["normalizedContentHash"]),
@@ -214,6 +218,12 @@ export default defineSchema({
     source: v.optional(v.string()),
     /** Storage id for uploaded artifacts; optional for typed records. */
     storageId: v.optional(v.id("_storage")),
+    filename: v.optional(v.string()),
+    fileSize: v.optional(v.number()),
+    mimeType: v.optional(v.string()),
+    sourceHash: v.optional(v.string()),
+    extractedFacts: v.optional(v.string()),
+    processingStatus: v.optional(v.string()),
     body: v.optional(v.string()),
     revisionId: v.id("tenderRevisions"),
     verificationStatus: verificationStatus,

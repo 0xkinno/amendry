@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { action, mutation } from "./_generated/server";
+import { action, mutation, query } from "./_generated/server";
 import { requireTender } from "./lib/auth";
 import { hashSource } from "./lib/hashes";
 import { inspectSource } from "./lib/sourceSafety";
@@ -249,3 +249,16 @@ export const getFixture = action({
     return FIXTURE_TENDER;
   },
 });
+
+/** List all indexed source documents for a tender. */
+export const listDocuments = query({
+  args: { tenderId: v.id("tenders") },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("sourceDocuments")
+      .withIndex("by_tender", (q) => q.eq("tenderId", args.tenderId))
+      .order("desc")
+      .collect();
+  },
+});
+

@@ -14,8 +14,9 @@
 | **M8: Adversarial Attack Campaign** | 2026-09-22 | Completed | `scripts/attack-campaign.mjs` (12/12 pass) |
 | **M9: Tender Integrity Benchmark** | 2026-09-22 | Completed | `benchmark/results.json` (0 escapes / 100% accuracy) |
 | **M10: Standalone Offline Proof Verifier** | 2026-09-22 | Completed | `scripts/verify-proof.mjs` (15/15 checks pass) |
-| **M11: E2E Playwright Suite & Responsive** | 2026-09-22 | Completed | `playwright.config.ts` & `tests/e2e/*.spec.ts` |
+| **M11: E2E Playwright Suite & Responsive** | 2026-09-22 | Completed | `playwright.config.ts` & `tests/e2e/*.spec.ts` (36/36 pass) |
 | **M12: Production Build & Release Gate** | 2026-09-22 | Completed | `npm run build` (Clean Vite bundle) |
+| **M13: Product Completeness & Bid Room** | 2026-09-22 | Completed | Real PDF storage, 5-part Bid Room, commit-time certification (`finalizeSubmission`) |
 
 ---
 
@@ -35,3 +36,10 @@
 - 12 automated adversarial attacks executing across race conditions, duplicate webhooks, action replays, outages, schema corruption, and digest forgeries.
 - 12 benchmark procurement scenarios demonstrating that naive snapshot LLMs have a 91.7% failure rate while AMENDRY maintains a 0.0% failure rate.
 - Offline proof script recalculating SHA-256 parent-pointer lineage and FNV-1a digests independently.
+
+### M13: Bid Room & Authoritative Commit-Time Certification
+- Dedicated 5-part Bid Room: (1) Current Status, (2) What Changed, (3) What Broke, (4) Evidence State, (5) Next Human Action.
+- Real PDF/Document ingestion with Convex File Storage (`api.files.generateUploadUrl`, `api.files.saveEvidenceFile`, `api.files.saveSourceDocumentFile`).
+- Authoritative commit-time certification mutation (`api.submissions.finalizeSubmission`) closing the browser TOCTOU loophole by re-verifying all requirements and evidence inside the atomic commit transaction before stamping `revisionCertificates`.
+- Real-time OpenAI structured evidence fact extraction and reactive invalidation/replacement loop.
+

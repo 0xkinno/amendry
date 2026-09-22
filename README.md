@@ -30,6 +30,7 @@ Amendry is a **live tender integrity desk** that monitors external procurement p
 | **Live Production Deployment** | [https://hushed-curlew-671.convex.site](https://hushed-curlew-671.convex.site) | Public static hosting on Convex with reactive cloud backend |
 | **Live Judge Evaluation Sandbox** | [https://hushed-curlew-671.convex.site/judges](https://hushed-curlew-671.convex.site/judges) | 1-click demo seed, live amendment injection, attack runner |
 | **Operations Desk** | [https://hushed-curlew-671.convex.site/app](https://hushed-curlew-671.convex.site/app) | Live monitored procurement tenders and blast radius viewer |
+| **Bid Room Workspace** | [https://hushed-curlew-671.convex.site/app/tenders/demo_mta_station_upgrade](https://hushed-curlew-671.convex.site/app/tenders/demo_mta_station_upgrade) | 5-part tender workspace: Status, Diffs, Broken Obligations, Evidence Upload, Certification Gate |
 | **Cryptographic Proof Room** | [https://hushed-curlew-671.convex.site/proof](https://hushed-curlew-671.convex.site/proof) | Append-only audit events, SHA-256 parent lineage, offline verifier |
 | **Integrity Benchmark Report** | [`benchmark/results.md`](benchmark/results.md) | 12-scenario empirical benchmark: 0% escape rate vs 91.7% baseline |
 | **Adversarial Attack Suite** | [`scripts/attack-campaign.mjs`](scripts/attack-campaign.mjs) | 12-vector adversarial attack suite (A01–A12) |
@@ -61,6 +62,49 @@ Amendry solves this by replacing static document snapshots with a **live, revisi
 2. **Deterministic Blast Radius**: When an amendment arrives, the clause diff engine calculates the exact blast radius and immediately invalidates all affected requirements and dependent evidence.
 3. **Fail-Closed Readiness Invariant**: The submission status transitions instantly from `READY` to `BLOCKED`. No packet can be marked `READY` unless every mandatory requirement is verified against the *current* tender revision.
 4. **Idempotent Clarification Desk**: Ambiguities are clarified with buyers through AgentMail with cryptographic receipts and webhook-driven resolution.
+
+---
+
+## Core Capabilities & Product Architecture
+
+AMENDRY provides a complete, human-usable tender lifecycle backed by a mathematical integrity kernel:
+
+1. **Real Tender Ingestion**:
+   - Live URL scraping and crawling via Firecrawl API.
+   - Dual SHA-256 fingerprinting (raw content hash and whitespace-normalized source hash) to detect true semantic mutations while ignoring web layout noise.
+2. **Tender & Addendum PDF Upload**:
+   - Direct PDF / document ingestion backed by native Convex File Storage (`api.files.saveSourceDocumentFile`).
+   - Generates persistent content hashes and source document records stored directly in the `sourceDocuments` collection.
+3. **Evidence Artifact Upload**:
+   - Upload official compliance documents, Certificates of Insurance (COI), SOC 2 reports, and financial statements via `api.files.generateUploadUrl` and `api.files.saveEvidenceFile`.
+   - Client-side and server-side SHA-256 cryptographic fingerprinting.
+4. **Structured Requirement Extraction**:
+   - Server-side OpenAI `gpt-4o` extraction constrained by strict TypeScript / Zod schemas (`convex/lib/modelSchemas.ts`).
+   - Every extracted requirement requires verbatim quote spans, category classification, structured numerical values (e.g. `$5,000,000`), and confidence scores. Model has zero authority over readiness.
+5. **Evidence Mapping**:
+   - Revision-aware `requirementEvidence` join table pinning each evidence edge to the specific revision that demanded it.
+   - Preserves auditability across multiple tenders and historical addenda.
+6. **Revision Impact Graph (Blast Radius)**:
+   - Interactive visualizer showing the exact 3-step causal chain: (1) Source clause mutation, (2) Requirement obligation delta, and (3) Disqualified evidence.
+   - Interactive node selector tabs for navigating affected obligations.
+7. **Stale Evidence Invalidation**:
+   - Fail-closed invalidation: When an amendment alters an obligation (e.g., liability raised from $2M to $5M), previously verified evidence is instantly marked `STALE` and the package transitions to `BLOCKED`.
+8. **AgentMail Clarification Loop**:
+   - AI-drafted buyer inquiries regarding ambiguous specifications or contradictory clauses.
+   - Requires explicit human approval before outbound dispatch via AgentMail.
+   - Inbound webhook handler parses buyer replies with deduplication and durable idempotency keys.
+9. **Commit-Time Certification Gate**:
+   - Authoritative mutation (`finalizeSubmission`) re-evaluates all requirements, evidence, and conflicts at the transaction boundary.
+   - Stamps an immutable `revisionCertificates` record (`CERT-REV09-...`) preventing stale browser submissions.
+10. **Immutable Proof Ledger**:
+    - Append-only `proofEvents` ledger recording every state change, SHA-256 parent hash pointer, and readiness evaluation sequence.
+11. **Adversarial Attack Campaign**:
+    - 12 automated attack vectors (A01–A12) testing race conditions, replay attacks, webhook replays, 404 outages, prompt injection, dual-source conflicts, and digest forgery. All 12 mitigated.
+12. **Empirical Integrity Benchmark**:
+    - 12 high-stakes procurement scenarios comparing AMENDRY against naive snapshot LLM baselines. Baseline escapes: 91.7%; AMENDRY escapes: 0.0% (100% safety accuracy).
+13. **Standalone Offline Proof Verifier**:
+    - Standalone script (`scripts/verify-proof.mjs`) mathematically re-verifying hash invariance, parent-pointer lineage, and FNV-1a digests independently of any server.
+
 
 ---
 
@@ -210,17 +254,15 @@ The readiness evaluation (`convex/lib/readinessKernel.ts`) is a **pure mathemati
 - `reasons`: Comprehensive list of blocking rules triggered
 - `readinessDigest`: 32-bit FNV-1a digest over sorted canonical requirement and evidence states
 
-### Why the final submission cannot trust a stale browser
+### Why the final submission cannot trust stale browser state
 
-A reactive UI can observe an earlier READY state.
-
+A reactive interface may have observed READY earlier.
 AMENDRY does not treat that observation as authority.
-
-The final submission mutation re-reads the current tender revision, requirements, evidence, conflicts, and approval state inside the authoritative Convex transaction boundary before creating the revision-pinned certification artifact.
-
-The browser tells the system what the user requested.
-
-The transaction decides whether that request is still valid.
+The final certification mutation re-reads the current tender revision,
+requirements, evidence, conflicts, and approval state, recomputes readiness,
+and creates a revision-pinned certificate only when the current snapshot passes.
+The browser expresses intent.
+The transaction decides whether that intent is still valid.
 
 ### Authoritative Convex Path: Closing the TOCTOU Gap
 
