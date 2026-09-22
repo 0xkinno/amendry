@@ -1,0 +1,110 @@
+[
+  {
+    "id": "A01",
+    "name": "READY vs AMENDMENT Race Condition",
+    "vector": "User attempts to commit submission package against Rev 7 while Rev 8 is current",
+    "expected": "Kernel blocks with PACKAGE_REVISION_MISMATCH; zero false READY escape",
+    "verdict": "PASS",
+    "detail": "Status: BLOCKED, Blocking: PACKAGE_REVISION_MISMATCH, EVIDENCE_REVISION_MISMATCH",
+    "timestamp": "2026-09-22T11:31:13.528Z"
+  },
+  {
+    "id": "A02",
+    "name": "Duplicate Source Ingest Replay",
+    "vector": "Replay identical Firecrawl markdown payload twice",
+    "expected": "Content hash & normalized hash match identically; duplicate revision avoided",
+    "verdict": "PASS",
+    "detail": "Hash: ee81b541fb4a1186... matches replayed hash",
+    "timestamp": "2026-09-22T11:31:13.531Z"
+  },
+  {
+    "id": "A03",
+    "name": "Duplicate Inbound Mail Webhook Replay",
+    "vector": "Provider replays the same webhook event with identical providerEventId",
+    "expected": "Deterministic idempotency key matches; duplicate processing intercepted",
+    "verdict": "PASS",
+    "detail": "Key: openai:parse:message:event-evt_991823",
+    "timestamp": "2026-09-22T11:31:13.532Z"
+  },
+  {
+    "id": "A04",
+    "name": "Action Replay Duplicate Dispatch",
+    "vector": "External worker crashes and retries outbound AgentMail send",
+    "expected": "Receipt key prevents secondary outbound email dispatch",
+    "verdict": "PASS",
+    "detail": "Receipt Key: agentmail:clarification:clar_123:hash:hash_v9",
+    "timestamp": "2026-09-22T11:31:13.532Z"
+  },
+  {
+    "id": "A05",
+    "name": "Workflow Interruption & Resumption",
+    "vector": "Workflow abruptly killed after extraction before impact computation",
+    "expected": "Stage checkpoint receipt persists; resumes without duplicate extraction call",
+    "verdict": "PASS",
+    "detail": "Stage Key: workflow:tender:t1:revision:rev8:stage:EXTRACT",
+    "timestamp": "2026-09-22T11:31:13.532Z"
+  },
+  {
+    "id": "A06",
+    "name": "Source Outage & 404 Denial of Service",
+    "vector": "Tender portal goes down or returns 404 during monitoring cycle",
+    "expected": "Kernel explicitly transitions to SOURCE_UNAVAILABLE; never guesses unchanged",
+    "verdict": "PASS",
+    "detail": "Verdict: BLOCKED, Code: SOURCE_UNAVAILABLE enforced",
+    "timestamp": "2026-09-22T11:31:13.535Z"
+  },
+  {
+    "id": "A07",
+    "name": "Malformed / Adversarial Model Output",
+    "vector": "LLM returns hallucinated JSON schema missing required title and valid category",
+    "expected": "Zod schema validation rejects output; triggers controlled failure without data corruption",
+    "verdict": "PASS",
+    "detail": "Validation ok: false, Issues caught: 7",
+    "timestamp": "2026-09-22T11:31:13.547Z"
+  },
+  {
+    "id": "A08",
+    "name": "Conflicting Dual-Source Ambiguity",
+    "vector": "Two official tender sources disagree on mandatory submission deadline",
+    "expected": "Kernel registers OPEN conflict and fail-closed blocks readiness until human resolution",
+    "verdict": "PASS",
+    "detail": "Verdict: BLOCKED, Blocked on open conflict: true",
+    "timestamp": "2026-09-22T11:31:13.547Z"
+  },
+  {
+    "id": "A09",
+    "name": "Stale Evidence Invalidation Enforcement",
+    "vector": "Tender criteria increases liability to $5M; existing evidence was for $2M",
+    "expected": "Evidence status STALE blocks mandatory requirement; readiness BLOCKED",
+    "verdict": "PASS",
+    "detail": "Verdict: BLOCKED, Blocked requirement: req_ins",
+    "timestamp": "2026-09-22T11:31:13.548Z"
+  },
+  {
+    "id": "A10",
+    "name": "Historical Revision Tampering Attempt",
+    "vector": "Client requests update to historical Revision 5 requirements",
+    "expected": "Historical revisions are immutable; only new superseding revision can be created",
+    "verdict": "PASS",
+    "detail": "Immutability invariant enforced by revision chain",
+    "timestamp": "2026-09-22T11:31:13.548Z"
+  },
+  {
+    "id": "A11",
+    "name": "Rate Limit Exhaustion Attack",
+    "vector": "Adversarial client fires 10 concurrent requests to exhaust external quotas",
+    "expected": "Rate limiter enforces token bucket ceiling; blocks requests over limit",
+    "verdict": "PASS",
+    "detail": "Processed: 5, Blocked after: 5",
+    "timestamp": "2026-09-22T11:31:13.548Z"
+  },
+  {
+    "id": "A12",
+    "name": "Readiness Digest Forgery Attempt",
+    "vector": "Adversary attempts to replay Rev 8 readiness digest against Rev 9",
+    "expected": "Digest recomputation detects revision mismatch; signature rejected",
+    "verdict": "PASS",
+    "detail": "Real Rev 8: 3b5c0ab456df9839e3e2d626 ≠ Forged Rev 9: db04888fb38650d08ea47137",
+    "timestamp": "2026-09-22T11:31:13.548Z"
+  }
+]

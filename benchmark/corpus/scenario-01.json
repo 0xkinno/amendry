@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_01",
+  "name": "Public Liability Insurance Threshold Increased",
+  "category": "CRITERIA_MUTATION",
+  "description": "Tender requirement increases from $2,000,000 to $5,000,000 in Addendum 8.",
+  "priorRevision": {
+    "revisionNumber": 8,
+    "requirement": { "key": "insurance:public-liability", "threshold": 2000000 },
+    "evidence": { "coverage": 2000000, "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 9,
+    "requirement": { "key": "insurance:public-liability", "threshold": 5000000 },
+    "evidence": { "coverage": 2000000, "status": "STALE" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Snapshot-only assistant sees requirement marked 'verified' earlier and issues ready certification."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Revision advance sets requirement to UNKNOWN, evidence to STALE, and blocks package fail-closed."
+  }
+}

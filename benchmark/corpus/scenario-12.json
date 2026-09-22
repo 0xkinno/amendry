@@ -1,0 +1,28 @@
+{
+  "id": "SCENARIO_12",
+  "name": "Mandatory ISO Certificate Expires Before Extended Submission Window",
+  "category": "TEMPORAL_VALIDITY",
+  "description": "Addendum 8 extends submission deadline past expiration date of vendor's ISO 9001 certificate.",
+  "priorRevision": {
+    "revisionNumber": 8,
+    "deadline": "2026-09-15T00:00:00Z",
+    "requirement": { "key": "cert:iso-9001", "validThrough": "2026-09-30T00:00:00Z" },
+    "evidence": { "validUntil": "2026-09-30T00:00:00Z", "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 9,
+    "deadline": "2026-10-15T00:00:00Z",
+    "requirement": { "key": "cert:iso-9001", "validThrough": "2026-10-15T00:00:00Z" },
+    "evidence": { "validUntil": "2026-09-30T00:00:00Z", "status": "STALE" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Snapshot assistant checked validity date against old deadline and did not cross-check new deadline."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Readiness engine invalidates evidence whose validity window does not encompass revised tender deadline."
+  }
+}

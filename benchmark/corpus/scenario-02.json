@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_02",
+  "name": "Submission Deadline Brought Forward by 48 Hours",
+  "category": "SCHEDULE_ACCELERATION",
+  "description": "Addendum 3 accelerates submission deadline from Nov 1 to Oct 30 due to municipal holiday.",
+  "priorRevision": {
+    "revisionNumber": 3,
+    "requirement": { "key": "schedule:deadline", "deadline": "2026-11-01T17:00:00Z" },
+    "evidence": { "submissionSchedule": "2026-11-01T17:00:00Z", "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 4,
+    "requirement": { "key": "schedule:deadline", "deadline": "2026-10-30T17:00:00Z" },
+    "evidence": { "submissionSchedule": "2026-11-01T17:00:00Z", "status": "STALE" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Snapshot assistant checked schedule against original notice date and passed."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Revision advance flags schedule mismatch; dependent submission timeline invalidated."
+  }
+}

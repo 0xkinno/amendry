@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_10",
+  "name": "Late Subcontractor Prequalification Requirement Added",
+  "category": "SUPPLY_CHAIN_MANDATE",
+  "description": "Addendum 7 introduces mandatory DBE/MBE 20% subcontracting plan with notarized letters of intent.",
+  "priorRevision": {
+    "revisionNumber": 7,
+    "requirement": { "key": "subcontractor:dbe-plan", "mandatory": false },
+    "evidence": null
+  },
+  "newRevision": {
+    "revisionNumber": 8,
+    "requirement": { "key": "subcontractor:dbe-plan", "mandatory": true, "threshold": "20%" },
+    "evidence": { "dbePlan": null, "status": "MISSING" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Baseline assumes optional items from baseline RFP remain optional."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Mandatory flag transition to true requires valid evidence edge before package certification."
+  }
+}

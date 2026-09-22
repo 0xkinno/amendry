@@ -1,0 +1,37 @@
+{
+  "testId": "amendry-verified-release-manifest",
+  "createdAt": "2026-09-22T10:04:41.505Z",
+  "commit": "local",
+  "environment": "vitest + node + convex",
+  "input": "Complete verification execution: unit tests, attack campaign, benchmark corpus, offline proofs, copy/secret scan",
+  "expected": "All unit tests pass (83/83), 12 attacks pass, 12 benchmark scenarios pass with 0 false-ready escapes, 0 type errors",
+  "actual": {
+    "unitTests": {
+      "total": 83,
+      "passed": 83,
+      "files": 4
+    },
+    "typecheck": "clean",
+    "attacks": {
+      "total": 12,
+      "passed": 12
+    },
+    "benchmark": {
+      "total": 12,
+      "falseReadyEscapes": 0,
+      "baselineEscapes": 11,
+      "accuracy": "100.0%"
+    },
+    "evidenceFiles": [
+      "attack-campaign.json",
+      "benchmark.json",
+      "discovery.json",
+      "readiness-kernel.json",
+      "revision-race.json",
+      "webhook-idempotency.json",
+      "workflow-recovery.json"
+    ]
+  },
+  "result": "PASS",
+  "artifactDirectory": "evidence/"
+}

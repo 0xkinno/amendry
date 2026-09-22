@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_05",
+  "name": "Procurement Portal 404 / Source Outage During Final Submission",
+  "category": "SOURCE_AVAILABILITY",
+  "description": "Primary portal returns HTTP 404/503 during scheduled heartbeat recheck.",
+  "priorRevision": {
+    "revisionNumber": 5,
+    "sourceState": "CURRENT",
+    "requirement": { "key": "general:eligibility", "verified": true }
+  },
+  "newRevision": {
+    "revisionNumber": 5,
+    "sourceState": "UNAVAILABLE",
+    "requirement": { "key": "general:eligibility", "verified": false }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Cached snapshot ignores network outage; certifies submission based on old state."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Source state unavailable halts verification; prevents submitting against unreachable portal."
+  }
+}

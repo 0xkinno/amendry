@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_07",
+  "name": "Bid Bond Instrument Format Changed to Irrevocable LOC",
+  "category": "FINANCIAL_INSTRUMENT",
+  "description": "Addendum 4 prohibits standard surety company letters; mandates Irrevocable Standby Letter of Credit.",
+  "priorRevision": {
+    "revisionNumber": 3,
+    "requirement": { "key": "financial:security-instrument", "format": "SURETY_LETTER" },
+    "evidence": { "instrumentType": "SURETY_LETTER", "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 4,
+    "requirement": { "key": "financial:security-instrument", "format": "STANDBY_LOC" },
+    "evidence": { "instrumentType": "SURETY_LETTER", "status": "STALE" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Assistant sees file named 'Bid_Security_Document.pdf' and marks check complete."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Evidence mapping detects format divergence; evidence marked STALE pending valid LOC upload."
+  }
+}

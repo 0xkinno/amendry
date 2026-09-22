@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_03",
+  "name": "Mandatory Rail Safety Certification Added in Corrigendum",
+  "category": "NEW_OBLIGATION",
+  "description": "Corrigendum 2 adds mandatory FTA Rail Track Safety Competency Level 3 not in original RFP.",
+  "priorRevision": {
+    "revisionNumber": 2,
+    "requirement": { "key": "technical:general-safety", "level": "OSHA-30" },
+    "evidence": { "safetyCert": "OSHA-30", "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 3,
+    "requirement": { "key": "technical:rail-safety", "level": "FTA-Level-3", "mandatory": true },
+    "evidence": { "safetyCert": null, "status": "MISSING" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Snapshot assistant ignores newly published corrigendum section; passes original checklist."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "New mandatory requirement extracted in Revision 3 lacks verified evidence item."
+  }
+}

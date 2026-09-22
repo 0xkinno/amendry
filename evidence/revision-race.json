@@ -1,0 +1,11 @@
+{
+  "testId": "attack-1-revision-race",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "unit-test",
+  "input": "Concurrent revision advance and ready mutation",
+  "expected": "No false READY state exposed",
+  "actual": "Kernel blocks when revision advances before check; package becomes STALE when revision advances after check",
+  "result": "PASS",
+  "artifact": "tests/unit/readinessKernel.test.ts"
+}

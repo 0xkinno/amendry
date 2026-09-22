@@ -1,0 +1,11 @@
+{
+  "testId": "readiness-kernel-all",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "vitest",
+  "input": "25 test cases covering all 7 states, all blocking conditions, digest determinism",
+  "expected": "All tests pass",
+  "actual": "25/25 tests pass",
+  "result": "PASS",
+  "artifact": "tests/unit/readinessKernel.test.ts"
+}

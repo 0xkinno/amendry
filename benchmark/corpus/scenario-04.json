@@ -1,0 +1,27 @@
+{
+  "id": "SCENARIO_04",
+  "name": "Dual-Source Specification Conflict",
+  "category": "SPECIFICATION_CONFLICT",
+  "description": "Notice text states bonding required at 10% contract value; attached PDF specs state 15%.",
+  "priorRevision": {
+    "revisionNumber": 1,
+    "requirement": { "key": "financial:bid-bond", "percentage": 10 },
+    "evidence": { "bondRate": 10, "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 2,
+    "requirement": { "key": "financial:bid-bond", "percentage": 15, "conflictId": "conf_04" },
+    "evidence": { "bondRate": 10, "status": "CONTESTED" },
+    "conflicts": [{ "id": "conf_04", "status": "OPEN", "description": "10% vs 15% discrepancy" }]
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Snapshot assistant resolves ambiguity by picking first match without halting submission."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Open conflict present in kernel input; readiness evaluator fails closed unconditionally."
+  }
+}

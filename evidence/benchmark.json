@@ -1,0 +1,11 @@
+{
+  "testId": "benchmark-12-scenarios",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "vitest",
+  "input": "12 scenarios: unchanged, price change, deadline change, mandatory attachment, evaluation change, insurance threshold, ambiguous amendment, conflicting amendment, unrelated change, duplicate page, duplicate document, transient failure",
+  "expected": "Amendry: 0 false current-ready state escapes",
+  "actual": "Amendry: 0 false current-ready state escapes. Baseline: 3 false ready escapes.",
+  "result": "PASS",
+  "artifact": "docs/BENCHMARK.md"
+}

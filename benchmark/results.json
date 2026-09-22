@@ -1,0 +1,244 @@
+{
+  "timestamp": "2026-09-22T11:31:20.317Z",
+  "totalScenarios": 12,
+  "summary": {
+    "baselineFalseReadyEscapes": 11,
+    "baselineEscapeRate": "91.7%",
+    "amendryFalseReadyEscapes": 0,
+    "amendryEscapeRate": "0.0%",
+    "safetyAccuracy": "100.0%"
+  },
+  "scenarios": [
+    {
+      "id": "SCENARIO_01",
+      "name": "Public Liability Insurance Threshold Increased",
+      "category": "CRITERIA_MUTATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Snapshot-only assistant sees requirement marked 'verified' earlier and issues ready certification."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is STALE"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_02",
+      "name": "Submission Deadline Brought Forward by 48 Hours",
+      "category": "SCHEDULE_ACCELERATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Snapshot assistant checked schedule against original notice date and passed."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is STALE"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_03",
+      "name": "Mandatory Rail Safety Certification Added in Corrigendum",
+      "category": "NEW_OBLIGATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Snapshot assistant ignores newly published corrigendum section; passes original checklist."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is MISSING",
+          "Mandatory requirement lacks current verified evidence"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_04",
+      "name": "Dual-Source Specification Conflict",
+      "category": "SPECIFICATION_CONFLICT",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Snapshot assistant resolves ambiguity by picking first match without halting submission."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is CONTESTED",
+          "Unresolved tender conflict detected"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_05",
+      "name": "Procurement Portal 404 / Source Outage During Final Submission",
+      "category": "SOURCE_AVAILABILITY",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Cached snapshot ignores network outage; certifies submission based on old state."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Source state unavailable"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_06",
+      "name": "Scope of Work Demarcation Altered",
+      "category": "SCOPE_MUTATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Assistant retains old scope artifacts and declares bid package complete."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is MISSING",
+          "Mandatory requirement lacks current verified evidence"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_07",
+      "name": "Bid Bond Instrument Format Changed to Irrevocable LOC",
+      "category": "FINANCIAL_INSTRUMENT",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Assistant sees file named 'Bid_Security_Document.pdf' and marks check complete."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is STALE"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_08",
+      "name": "Key Personnel Minimum Experience Increased to 10 Years",
+      "category": "PERSONNEL_QUALIFICATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Baseline sees approved CV in slot and fails to re-evaluate structured threshold constraint."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is STALE"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_09",
+      "name": "Addendum Q&A Contradicts Mandatory Spec Section 3.2",
+      "category": "BUYER_CLARIFICATION_CONFLICT",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Assistant accepts buyer Q&A answer without verifying whether contract amendment was formally issued."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is CONTESTED",
+          "Unresolved tender conflict detected"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_10",
+      "name": "Late Subcontractor Prequalification Requirement Added",
+      "category": "SUPPLY_CHAIN_MANDATE",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Baseline assumes optional items from baseline RFP remain optional."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is MISSING",
+          "Mandatory requirement lacks current verified evidence"
+        ],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_11",
+      "name": "Portal Layout Markup Reshuffle (Zero Semantic Change)",
+      "category": "NON_SEMANTIC_NORMALIZATION",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": false,
+        "reason": "Baseline remains ready because text looks unchanged."
+      },
+      "amendry": {
+        "verdict": "READY",
+        "expectedVerdict": "READY",
+        "falseReadyEscape": false,
+        "blockingReasons": [],
+        "matchedExpected": true
+      }
+    },
+    {
+      "id": "SCENARIO_12",
+      "name": "Mandatory ISO Certificate Expires Before Extended Submission Window",
+      "category": "TEMPORAL_VALIDITY",
+      "baseline": {
+        "verdict": "READY",
+        "falseReadyEscape": true,
+        "reason": "Snapshot assistant checked validity date against old deadline and did not cross-check new deadline."
+      },
+      "amendry": {
+        "verdict": "BLOCKED",
+        "expectedVerdict": "BLOCKED",
+        "falseReadyEscape": false,
+        "blockingReasons": [
+          "Evidence status is STALE"
+        ],
+        "matchedExpected": true
+      }
+    }
+  ]
+}

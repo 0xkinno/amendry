@@ -1,0 +1,28 @@
+{
+  "id": "SCENARIO_11",
+  "name": "Portal Layout Markup Reshuffle (Zero Semantic Change)",
+  "category": "NON_SEMANTIC_NORMALIZATION",
+  "description": "Portal web update changes CSS class names and adds advertisement banners; legal clauses are 100% identical.",
+  "priorRevision": {
+    "revisionNumber": 7,
+    "normalizedHash": "b73a6948b88d3e921e42f6adfa12d9b62649ce459d28",
+    "requirement": { "key": "insurance:public-liability", "threshold": 2000000 },
+    "evidence": { "coverage": 2000000, "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 7,
+    "normalizedHash": "b73a6948b88d3e921e42f6adfa12d9b62649ce459d28",
+    "requirement": { "key": "insurance:public-liability", "threshold": 2000000 },
+    "evidence": { "coverage": 2000000, "status": "CURRENT" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": false,
+    "reason": "Baseline remains ready because text looks unchanged."
+  },
+  "amendry": {
+    "verdict": "READY",
+    "falseReadyEscape": false,
+    "reason": "Normalized hash match prevents false revision increment or spurious evidence invalidation."
+  }
+}

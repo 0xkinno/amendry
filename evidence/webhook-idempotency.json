@@ -1,0 +1,11 @@
+{
+  "testId": "attacks-2-3-4-idempotency",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "unit-test",
+  "input": "Duplicate Firecrawl results, duplicate webhook replays, action replays",
+  "expected": "No duplicate revisions, messages, emails, or packages",
+  "actual": "Idempotency keys prevent duplicate state transitions",
+  "result": "PASS",
+  "artifact": "tests/unit/idempotency.test.ts"
+}

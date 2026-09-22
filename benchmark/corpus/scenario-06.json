@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_06",
+  "name": "Scope of Work Demarcation Altered",
+  "category": "SCOPE_MUTATION",
+  "description": "Addendum 5 removes North Terminal excavation and adds East Tunnel ventilation retrofit.",
+  "priorRevision": {
+    "revisionNumber": 4,
+    "requirement": { "key": "scope:excavation-north", "scope": "North Terminal", "mandatory": true },
+    "evidence": { "crewPlan": "North Terminal Team", "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 5,
+    "requirement": { "key": "scope:ventilation-east", "scope": "East Tunnel", "mandatory": true },
+    "evidence": { "crewPlan": null, "status": "MISSING" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Assistant retains old scope artifacts and declares bid package complete."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Blast radius calculation marks old scope obsolete and demands evidence for new East Tunnel obligation."
+  }
+}

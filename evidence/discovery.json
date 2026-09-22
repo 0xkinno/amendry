@@ -1,0 +1,11 @@
+{
+  "testId": "discovery-gate",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "documentation",
+  "input": "Discovery gate questions answered with source URLs",
+  "expected": "All discovery questions answered",
+  "actual": "Primitive, behavior, tests, sources, failure case, user pain, gap, capability, invariant, proof plan documented",
+  "result": "PASS",
+  "artifact": "docs/DISCOVERY.md"
+}

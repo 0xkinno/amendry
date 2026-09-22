@@ -1,0 +1,26 @@
+{
+  "id": "SCENARIO_08",
+  "name": "Key Personnel Minimum Experience Increased to 10 Years",
+  "category": "PERSONNEL_QUALIFICATION",
+  "description": "Addendum 6 increases Project Director experience from 5 years to 10 years verified public transit experience.",
+  "priorRevision": {
+    "revisionNumber": 5,
+    "requirement": { "key": "personnel:project-director", "minExperienceYears": 5 },
+    "evidence": { "directorName": "Jane Doe", "experienceYears": 7, "status": "CURRENT" }
+  },
+  "newRevision": {
+    "revisionNumber": 6,
+    "requirement": { "key": "personnel:project-director", "minExperienceYears": 10 },
+    "evidence": { "directorName": "Jane Doe", "experienceYears": 7, "status": "STALE" }
+  },
+  "baseline": {
+    "verdict": "READY",
+    "falseReadyEscape": true,
+    "reason": "Baseline sees approved CV in slot and fails to re-evaluate structured threshold constraint."
+  },
+  "amendry": {
+    "verdict": "BLOCKED",
+    "falseReadyEscape": false,
+    "reason": "Structured constraint re-evaluation marks Director CV stale/insufficient for 10-year threshold."
+  }
+}

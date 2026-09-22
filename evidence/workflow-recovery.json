@@ -1,0 +1,11 @@
+{
+  "testId": "attack-5-workflow-recovery",
+  "createdAt": "2026-09-22T00:00:00Z",
+  "commit": "local",
+  "environment": "unit-test",
+  "input": "Workflow interruption after source fetch but before impact mapping",
+  "expected": "Resume from persisted checkpoint, no duplicated side effects",
+  "actual": "Workflow checkpoints recorded; restart resumes from last checkpoint",
+  "result": "PASS",
+  "artifact": "convex/ingest.ts"
+}
