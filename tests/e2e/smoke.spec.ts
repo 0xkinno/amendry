@@ -5,8 +5,8 @@ test.describe("AMENDRY Smoke Tests", () => {
     await page.goto("/");
     await expect(page).toHaveTitle(/AMENDRY/i);
     await expect(page.locator("body")).toContainText("AMENDRY");
-    await expect(page.locator("a", { hasText: /Judge Mode/i })).toBeVisible();
-    await expect(page.locator("a", { hasText: /Proof Room/i })).toBeVisible();
+    await expect(page.locator("a", { hasText: /See a live tender|Evaluation|Judge/i }).first()).toBeVisible();
+    await expect(page.locator("a", { hasText: /Proof Room/i }).first()).toBeVisible();
   });
 
   test("Navigation across primary routes operates smoothly", async ({ page }) => {

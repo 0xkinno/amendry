@@ -17,7 +17,7 @@ export const processAmendment = action({
     tenderId: v.id("tenders"),
     amendmentId: v.id("amendments"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const amendment = await ctx.runQuery(api.amendments.get, {
       amendmentId: args.amendmentId,
     });

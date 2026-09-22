@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams, Link } from "react-router";
-import { useQuery, useMutation } from "convex/react";
+import { useQuery, useMutation, useAction } from "convex/react";
 import { api } from "../../convex/_generated/api";
 import type { Id } from "../../convex/_generated/dataModel";
 import { TopBar } from "../components/layout/TopBar";
@@ -70,9 +70,9 @@ export default function Tender() {
   const tender = useQuery(api.tenders.get, isReal ? { tenderId } : "skip");
   const currentRevision = useQuery(api.tenders.getCurrentRevision, isReal ? { tenderId } : "skip");
   const requirements = useQuery(api.requirements.listCurrent, isReal ? { tenderId } : "skip");
-  const revisions = useQuery(api.revisions.listByTender, isReal ? { tenderId } : "skip");
+  const revisions = useQuery(api.revisions.list, isReal ? { tenderId } : "skip");
   const evidence = useQuery(api.evidence.listByTender, isReal ? { tenderId } : "skip");
-  const clarifications = useQuery(api.clarifications.listByTender, isReal ? { tenderId } : "skip");
+  const clarifications = useQuery(api.clarifications.list, isReal ? { tenderId } : "skip");
   const submissionPkg = useQuery(api.submissions.getCurrent, isReal ? { tenderId } : "skip");
   const readiness = useQuery(api.readiness.evaluate, isReal ? { tenderId } : "skip");
   const proofEvents = useQuery(api.proof.listByTender, isReal ? { tenderId } : "skip");
@@ -89,9 +89,9 @@ export default function Tender() {
     coverage: { mandatory: 8, verified: 8, evidenceCurrent: 8 },
   };
 
-  // Mutations
+  // Mutations & Actions
   const approveClarification = useMutation(api.clarifications.approve);
-  const sendClarification = useMutation(api.mail.sendClarification);
+  const sendClarification = useAction(api.mail.sendClarification);
   const approvePackage = useMutation(api.submissions.approve);
 
   const reqList = effectiveRequirements;

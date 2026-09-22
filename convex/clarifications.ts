@@ -1,7 +1,6 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
-import { requireTender, requireOwned } from "./lib/auth";
-import { clarificationStatus } from "./lib/validators";
+import { requireTender } from "./lib/auth";
 import { getAuthUserId } from "@convex-dev/auth/server";
 
 /**

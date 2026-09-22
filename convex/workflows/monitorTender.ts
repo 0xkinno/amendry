@@ -13,7 +13,7 @@ export const monitorTender = action({
   args: {
     tenderId: v.id("tenders"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const tender = await ctx.runQuery(api.tenders.get, { tenderId: args.tenderId });
     if (!tender) throw new Error("Tender not found.");
     if (tender.status !== "MONITORING") {
@@ -21,7 +21,7 @@ export const monitorTender = action({
     }
 
     // Re-use the ingest workflow for the actual fetch + diff.
-    const result = await ctx.runAction(api.ingest.ingestTender, {
+    const result = await ctx.runAction(api.workflows.ingestTender.ingestTender, {
       tenderId: args.tenderId,
     });
 

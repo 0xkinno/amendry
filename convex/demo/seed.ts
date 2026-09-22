@@ -1,9 +1,8 @@
-import { v } from "convex/values";
 import { mutation } from "../_generated/server";
 import { getAuthUserId } from "@convex-dev/auth/server";
 import { hashSource } from "../lib/hashes";
 import { readinessDigest } from "../lib/readinessKernel";
-import type { Doc, Id } from "../_generated/dataModel";
+import type { Id } from "../_generated/dataModel";
 
 const SEED_REQUIREMENTS_RAW = [
   {

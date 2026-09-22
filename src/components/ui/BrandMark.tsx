@@ -1,11 +1,11 @@
 import { Link } from "react-router";
 
-export function Logo({ className = "" }: { className?: string }) {
+export function BrandMark({ className = "" }: { className?: string }) {
   return (
     <Link
       to="/"
       aria-label="AMENDRY home"
-      className={className}
+      className={`brand-mark ${className}`}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -15,6 +15,7 @@ export function Logo({ className = "" }: { className?: string }) {
       }}
     >
       <span
+        className="brand-mark__dot"
         aria-hidden="true"
         style={{
           width: "9px",
@@ -40,4 +41,4 @@ export function Logo({ className = "" }: { className?: string }) {
   );
 }
 
-export default Logo;
+export default BrandMark;

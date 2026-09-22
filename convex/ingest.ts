@@ -95,7 +95,7 @@ export const completeIngest = mutation({
     tenderId: v.id("tenders"),
   },
   handler: async (ctx, args) => {
-    const { tender } = await requireTender(ctx, args.tenderId);
+    await requireTender(ctx, args.tenderId);
     await ctx.db.patch(args.tenderId, {
       status: "MONITORING",
       error: undefined,

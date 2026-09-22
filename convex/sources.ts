@@ -2,12 +2,11 @@ import { v } from "convex/values";
 import { action, mutation } from "./_generated/server";
 import { requireTender } from "./lib/auth";
 import { hashSource } from "./lib/hashes";
-import { inspectSource, sanitizeKeys } from "./lib/sourceSafety";
+import { inspectSource } from "./lib/sourceSafety";
 import { idempotencyKey, decide } from "./lib/idempotency";
 import { firecrawlLive, sourceMode } from "./lib/integrations";
-import { limitOrThrow } from "./lib/rateLimit";
 import { components } from "./_generated/api";
-import { api } from "./_generated/api";
+import { FirecrawlClient } from "@firecrawl/firecrawl-convex";
 
 /**
  * P4.1 — Firecrawl ingestion (fetch, normalize, hash, links, amendment
@@ -99,19 +98,18 @@ export const fetchSource = action({
     }
 
     // Live Firecrawl fetch.
-    const firecrawl = await ctx.getComponentClient(components.firecrawl);
-    const result = await firecrawl.action("scrapeUrl", {
-      url: args.sourceUrl,
+    const firecrawl = new FirecrawlClient(components.firecrawl);
+    const result = await firecrawl.scrape(ctx, args.sourceUrl, {
       formats: ["markdown"],
     });
 
     return {
       markdown: result.markdown ?? "",
       title: result.metadata?.title ?? undefined,
-      links: result.metadata?.links ?? [],
-      canonicalUrl: result.metadata?.sourceURL ?? args.sourceUrl,
+      links: result.links ?? [],
+      canonicalUrl: (result.metadata?.sourceURL as string) ?? args.sourceUrl,
       isFixture: false,
-      firecrawlRunId: result.id ?? undefined,
+      firecrawlRunId: undefined,
     };
   },
 });

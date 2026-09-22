@@ -14,7 +14,7 @@ export const revalidateSubmission = action({
   args: {
     tenderId: v.id("tenders"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const result = await ctx.runMutation(api.readiness.checkAndUpdate, {
       tenderId: args.tenderId,
     });

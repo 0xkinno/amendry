@@ -120,7 +120,7 @@ export default function Workspace() {
         buyerName: newBuyer,
         sourceUrl: newUrl,
       });
-      setSelectedId(res.tenderId);
+      setSelectedId(res);
       setIsCreating(false);
       setNewTitle("");
       setNewBuyer("");
@@ -216,7 +216,7 @@ export default function Workspace() {
               <div>
                 <div className="flex justify-between items-center mb-3">
                   <p className="text-xs uppercase tracking-wide text-muted" style={{ letterSpacing: "0.1em", margin: 0 }}>
-                    Monitored Tenders ({activeTenderList.length})
+                    Active Tenders ({activeTenderList.length})
                   </p>
                   <button
                     className="btn btn--ghost btn--sm mono"

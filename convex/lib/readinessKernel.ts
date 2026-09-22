@@ -277,7 +277,6 @@ export function evaluateReadiness(input: ReadinessInput): ReadinessResult {
   for (const req of mandatory) {
     if (req.status === "REMOVED" || req.revisionId !== currentRevisionId) continue;
 
-    const linked = (input.evidence ?? []).filter((e) => e.id !== undefined);
     const reqEvidence = req.evidence;
 
     if (reqEvidence.length === 0) {

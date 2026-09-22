@@ -409,6 +409,30 @@ export default defineSchema({
     .index("by_workspace", ["workspaceId"]),
 
   /**
+   * Section 32 & 31: Commit-time revision certificates.
+   * Immutable certification artifact emitted by finalizeSubmission / certifyRevision.
+   */
+  revisionCertificates: defineTable({
+    certificateId: v.string(),
+    tenderId: v.id("tenders"),
+    workspaceId: v.id("workspaces"),
+    revisionId: v.id("tenderRevisions"),
+    revisionNumber: v.number(),
+    sourceHash: v.string(),
+    readinessDigest: v.string(),
+    requirementSnapshotHash: v.string(),
+    evidenceSnapshotHash: v.string(),
+    approvalId: v.optional(v.string()),
+    approvedAt: v.optional(v.number()),
+    expiresAt: v.number(),
+    status: v.union(v.literal("CERTIFIED"), v.literal("SUPERSEDED"), v.literal("REVOKED")),
+    createdAt: v.number(),
+  })
+    .index("by_tender", ["tenderId", "createdAt"])
+    .index("by_revision", ["revisionId"])
+    .index("by_cert_id", ["certificateId"]),
+
+  /**
    * Append-only receipts of major state changes. Drives the proof room and
    * the offline verifier. Never updated after insertion.
    */

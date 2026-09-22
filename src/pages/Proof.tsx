@@ -188,7 +188,7 @@ export default function Proof() {
 
         {/* ── Offline Verification Command ─────────────────────── */}
         <section className="mb-12">
-          <h2 className="mb-6">Independent Offline Verification</h2>
+          <h2 className="mb-6">Offline Proof Verifier & Independent Verification</h2>
           <div className="card card--ruled" style={{ background: "var(--paper-accent)" }}>
             <p className="text-sm mb-3">
               Run the standalone verification script from your terminal to independently prove hashes and readiness digests:

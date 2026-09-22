@@ -13,6 +13,10 @@
 
 ---
 
+![AMENDRY Banner](docs/screenshots/banner.png)
+
+---
+
 ## What it is
 
 Amendry is a **live tender integrity desk** that monitors external procurement portals, builds an immutable chain of tender revisions, computes the exact blast radius of procurement amendments, automatically invalidates dependent compliance work, coordinates clarifications via AgentMail, and enforces a server-authoritative, deterministic readiness gate before any submission can be marked ready.
@@ -25,7 +29,7 @@ Amendry is a **live tender integrity desk** that monitors external procurement p
 | :--- | :--- | :--- |
 | **Live Production Deployment** | [https://hushed-curlew-671.convex.site](https://hushed-curlew-671.convex.site) | Public static hosting on Convex with reactive cloud backend |
 | **Live Judge Evaluation Sandbox** | [https://hushed-curlew-671.convex.site/judges](https://hushed-curlew-671.convex.site/judges) | 1-click demo seed, live amendment injection, attack runner |
-| **Local Interactive Desk** | [`http://localhost:5173/`](http://localhost:5173/) | Local development desk (`npm run dev:frontend`) |
+| **Operations Desk** | [https://hushed-curlew-671.convex.site/app](https://hushed-curlew-671.convex.site/app) | Live monitored procurement tenders and blast radius viewer |
 | **Cryptographic Proof Room** | [https://hushed-curlew-671.convex.site/proof](https://hushed-curlew-671.convex.site/proof) | Append-only audit events, SHA-256 parent lineage, offline verifier |
 | **Integrity Benchmark Report** | [`benchmark/results.md`](benchmark/results.md) | 12-scenario empirical benchmark: 0% escape rate vs 91.7% baseline |
 | **Adversarial Attack Suite** | [`scripts/attack-campaign.mjs`](scripts/attack-campaign.mjs) | 12-vector adversarial attack suite (A01–A12) |
@@ -35,6 +39,8 @@ Amendry is a **live tender integrity desk** that monitors external procurement p
 ---
 
 ![AMENDRY Banner](docs/screenshots/banner.png)
+
+---
 
 ## The Problem
 
@@ -64,21 +70,21 @@ Amendry solves this by replacing static document snapshots with a **live, revisi
 
 Evaluators can verify the entire integrity lifecycle in under 2 minutes without external credentials:
 
-1. Open **`http://localhost:5173/judges`**.
+1. Open **[https://hushed-curlew-671.convex.site/judges](https://hushed-curlew-671.convex.site/judges)**.
 2. Click **"Seed Demo Workspace"** — boots an authoritative tender with 8 historical revisions, verified requirements, and a certified `READY` submission package.
-3. Click **"Simulate Revision 9 Amendment"** — injects an amendment that raises liability insurance from \$2M to \$5M and advances the tender revision.
+3. Click **"Simulate Revision 9 (Addendum 8)"** — injects an amendment that raises liability insurance from \$2M to \$5M and advances the tender revision.
 4. **Witness the Invariant**: The package status instantly flips to `BLOCKED (STALE_REVISION)`. The Certificate of Insurance is marked `STALE`. The Revision Impact Graph displays the exact clause diff and blast radius.
-5. Click **"Execute 12-Vector Attack Suite"** — executes all 12 adversarial test vectors in real time, verifying zero invariant escapes.
+5. Click **"Run 12-Attack Suite"** — executes all 12 adversarial test vectors in real time, verifying zero invariant escapes.
 
 ---
 
-## Product
+## Product Screenshots
 
 <table width="100%">
   <tr>
     <td width="50%" align="center">
-      <img src="docs/screenshots/01-operations-desk.png" alt="Operations Desk" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
-      <br /><sub><strong>1. Operations Desk (`/app`)</strong></sub>
+      <img src="docs/screenshots/01-landing-hero.png" alt="Editorial Landing & Hero" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
+      <br /><sub><strong>1. Editorial Landing & Hero (`/`)</strong></sub>
     </td>
     <td width="50%" align="center">
       <img src="docs/screenshots/02-tender-blast-radius.png" alt="Revision Blast Radius" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
@@ -91,7 +97,7 @@ Evaluators can verify the entire integrity lifecycle in under 2 minutes without 
       <br /><sub><strong>3. Judge & Evaluation Sandbox (`/judges`)</strong></sub>
     </td>
     <td width="50%" align="center">
-      <img src="docs/screenshots/04-proof-ledger.png" alt="Cryptographic Proof Ledger" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
+      <img src="docs/screenshots/04-proof-certificate.png" alt="Cryptographic Proof Ledger & Offline Verifier" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
       <br /><sub><strong>4. Cryptographic Proof Room (`/proof`)</strong></sub>
     </td>
   </tr>
@@ -205,6 +211,40 @@ The readiness evaluation (`convex/lib/readinessKernel.ts`) is a **pure mathemati
 - `verdict`: `READY` | `BLOCKED`
 - `reasons`: Comprehensive list of blocking rules triggered
 - `readinessDigest`: 32-bit FNV-1a digest over sorted canonical requirement and evidence states
+
+### Why the final submission cannot trust a stale browser
+
+A reactive UI can observe an earlier READY state.
+
+AMENDRY does not treat that observation as authority.
+
+The final submission mutation re-reads the current tender revision, requirements, evidence, conflicts, and approval state inside the authoritative Convex transaction boundary before creating the revision-pinned certification artifact.
+
+The browser tells the system what the user requested.
+
+The transaction decides whether that request is still valid.
+
+### Authoritative Convex Path: Closing the TOCTOU Gap
+
+```text
+Reactive query
+    ↓
+human sees READY
+    ↓
+user clicks CERTIFY
+    ↓
+Convex mutation
+    ↓
+re-read current revision
+    ↓
+recompute readiness
+    ↓
+transactional certification
+    ↓
+revision-pinned certificate
+```
+
+This closes the browser-state TOCTOU gap.
 
 ---
 

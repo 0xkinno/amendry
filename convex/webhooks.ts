@@ -1,6 +1,6 @@
 import { v } from "convex/values";
 import { httpAction, query, mutation } from "./_generated/server";
-import { api, components } from "./_generated/api";
+import { api } from "./_generated/api";
 import { webhookVerified } from "./lib/integrations";
 import { plainText } from "./lib/sourceSafety";
 import {
@@ -134,15 +134,21 @@ export async function handleAgentMailWebhook(
 ): Promise<Response> {
   // 1. Signature verification.
   if (webhookVerified()) {
-    const agentmail = await ctx.getComponentClient(components.agentmail);
-    const signature = request.headers.get("x-agentmail-signature");
-    const body = await request.text();
-    const isValid = await agentmail.action("webhooks.verify", {
-      body,
-      signature: signature ?? "",
-    });
-    if (!isValid) {
-      return new Response("Unauthorized", { status: 401 });
+    const secret = process.env.AGENTMAIL_WEBHOOK_SECRET;
+    if (secret) {
+      const cloned = request.clone();
+      const body = await cloned.text();
+      const headers = {
+        "svix-id": request.headers.get("svix-id") ?? request.headers.get("x-agentmail-id") ?? "",
+        "svix-timestamp": request.headers.get("svix-timestamp") ?? request.headers.get("x-agentmail-timestamp") ?? "",
+        "svix-signature": request.headers.get("svix-signature") ?? request.headers.get("x-agentmail-signature") ?? "",
+      };
+      try {
+        const { verifyAgentMailWebhook } = await import("@agentmail/convex");
+        verifyAgentMailWebhook(secret, body, headers);
+      } catch {
+        return new Response("Unauthorized", { status: 401 });
+      }
     }
   }
 

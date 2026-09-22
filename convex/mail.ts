@@ -5,6 +5,7 @@ import { idempotencyKey, decide } from "./lib/idempotency";
 import { agentmailLive } from "./lib/integrations";
 import { components } from "./_generated/api";
 import { hashPayload } from "./lib/hashes";
+import { AgentMail } from "@agentmail/convex";
 
 /**
  * P4.3 — AgentMail outbound (draft -> human approval -> send) with
@@ -20,7 +21,7 @@ export const sendClarification = action({
   args: {
     clarificationId: v.id("clarifications"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const clar = await ctx.runQuery(api.clarifications.get, {
       clarificationId: args.clarificationId,
     });
@@ -63,26 +64,25 @@ export const sendClarification = action({
 
     // Live AgentMail send.
     try {
-      const agentmail = await ctx.getComponentClient(components.agentmail);
-      const result = await agentmail.action("messages.send", {
-        from: "amendry-agent@agentmail.to",
+      const agentmail = new AgentMail(components.agentmail);
+      const result = await agentmail.sendMessage(ctx as any, "default", {
         to: clar.toAddress,
         subject: clar.subject,
-        body: clar.body,
+        text: clar.body,
       });
 
       await ctx.runMutation(api.clarifications.markSent, {
         clarificationId: args.clarificationId,
-        providerMessageId: result.messageId,
+        providerMessageId: String(result),
       });
 
       // Mark outbound as completed.
       await ctx.runMutation(api.mutations.completeOutbound, {
         idempotencyKey: idk,
-        providerRef: result.messageId,
+        providerRef: String(result),
       });
 
-      return { outcome: "SENT" as const, messageId: result.messageId };
+      return { outcome: "SENT" as const, messageId: String(result) };
     } catch (e) {
       const error = e instanceof Error ? e.message : String(e);
       await ctx.runMutation(api.clarifications.markFailed, {
@@ -93,7 +93,7 @@ export const sendClarification = action({
         idempotencyKey: idk,
         error,
       });
-      return { outcome: "FAILED" as const, error };
+      throw e;
     }
   },
 });

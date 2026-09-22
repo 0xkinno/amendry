@@ -27,7 +27,7 @@ export const findDueTenders = query({
 /** Action entry point called by the cron. */
 export const monitorAll = action({
   args: {},
-  handler: async (ctx) => {
+  handler: async (ctx): Promise<any> => {
     const dueTenders = await ctx.runQuery(api.monitorAll.findDueTenders);
 
     const results = [];

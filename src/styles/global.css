@@ -8,23 +8,42 @@
 
 /* ── Palette ─────────────────────────────────────────────────────── */
 :root {
-  --paper: #F5F1E7;
-  --ink: #172018;
-  --forest: #234A39;
-  --forest-light: #DDE8DF;
-  --signal: #D86D3A;
-  --signal-light: #F3D5C6;
-  --lemon: #E6D86A;
-  --line: #CFC8B8;
-  --muted: #7F8178;
-  --white: #FFFFFF;
-  --shadow: rgba(23, 32, 24, 0.06);
-  --shadow-md: rgba(23, 32, 24, 0.10);
+  --paper: #f7f5ef;
+  --paper-2: #efece3;
+  --ink: #151515;
+  --muted: #66645e;
+  --line: #d9d5cb;
+  --forest: #33483b;
+  --forest-light: #dde8df;
+  --accent: #1f6f68;
+  --warning: #8b5a27;
+  --critical: #8a3e34;
+  --success: #3e6b50;
+  --signal: #d86d3a;
+  --signal-light: #f3d5c6;
+  --lemon: #e6d86a;
+  --white: #ffffff;
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-xl: 38px;
+  --pill: 999px;
+
+  --shadow-soft: 0 18px 60px rgba(21, 21, 21, 0.08);
+  --shadow-card: 0 8px 30px rgba(21, 21, 21, 0.07);
+  --shadow: rgba(21, 21, 21, 0.06);
+  --shadow-md: rgba(21, 21, 21, 0.10);
+
+  --container: 1280px;
+  --max-w: 1280px;
+  --sidebar-w: 280px;
+  --topbar-h: 64px;
 }
 
 /* ── Typography ──────────────────────────────────────────────────── */
 :root {
-  --font-display: "Bricolage Grotesque", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: "Instrument Serif", "Playfair Display", Georgia, serif;
   --font-serif: "Instrument Serif", "Playfair Display", Georgia, serif;
   --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", "Geist Mono", monospace;
@@ -71,6 +90,8 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -80,6 +101,8 @@ body {
   color: var(--ink);
   background-color: var(--paper);
   min-height: 100vh;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 /* Subtle paper grain texture */
@@ -515,4 +538,217 @@ textarea.input {
   box-shadow: 2px 3px 0 rgba(23, 32, 24, 0.04);
   position: relative;
 }
+
+/* ── Container ─────────────────────────────────────────────────────── */
+.container {
+  width: min(calc(100% - 40px), var(--container));
+  margin-inline: auto;
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: min(calc(100% - 28px), var(--container));
+  }
+}
+
+/* ── Authoritative Button System ─────────────────────────────────── */
+.button {
+  min-height: 44px;
+  border-radius: var(--pill);
+  padding: 0 20px;
+  font-weight: 650;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: -0.01em;
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+  user-select: none;
+}
+
+.button:hover {
+  text-decoration: none;
+}
+
+.button--primary {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--ink);
+  box-shadow: 0 4px 0 rgba(21, 21, 21, 0.18);
+}
+
+.button--primary:hover {
+  background: #252525;
+  color: #ffffff;
+}
+
+.button--primary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(21, 21, 21, 0.12);
+}
+
+.button--secondary {
+  background: #ffffff;
+  color: var(--ink);
+  border-color: #d9d9d9;
+  box-shadow: 0 4px 0 #cfcfcf;
+}
+
+.button--secondary:hover {
+  background: #fafafa;
+  color: var(--ink);
+}
+
+.button--secondary:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #cfcfcf;
+}
+
+.button--quiet {
+  background: var(--paper-2);
+  color: var(--ink);
+  border-color: var(--line);
+  box-shadow: 0 2px 0 rgba(21, 21, 21, 0.05);
+}
+
+.button--quiet:hover {
+  background: #e6e2d7;
+  color: var(--ink);
+}
+
+.button--quiet:active {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 transparent;
+}
+
+.button--danger {
+  background: var(--critical);
+  color: #ffffff;
+  border-color: var(--critical);
+  box-shadow: 0 4px 0 rgba(138, 62, 52, 0.25);
+}
+
+.button--danger:hover {
+  background: #77332b;
+  color: #ffffff;
+}
+
+.button--danger:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 rgba(138, 62, 52, 0.15);
+}
+
+.button--ghost {
+  background: transparent;
+  color: var(--muted);
+  border-color: transparent;
+}
+
+.button--ghost:hover {
+  color: var(--ink);
+  background: rgba(21, 21, 21, 0.04);
+}
+
+/* ── Auth Split Screen Input ──────────────────────────────────────── */
+.auth-input {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #ffffff;
+  padding: 0 16px;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: var(--forest);
+  box-shadow: 0 0 0 4px rgba(51, 72, 59, 0.08);
+}
+
+/* ── Signature Scroll Statement Section ───────────────────────────── */
+.statement-section {
+  position: relative;
+  min-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  overflow: hidden;
+  max-width: 100vw;
+  padding: 80px 0;
+}
+
+.statement-stage {
+  position: relative;
+  width: min(100% - 32px, 1260px);
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.statement-core {
+  position: relative;
+  z-index: 20;
+  max-width: 680px;
+  text-align: center;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.statement-core h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6.5vw, 6.4rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  color: var(--ink);
+}
+
+.statement-card {
+  position: absolute;
+  z-index: 1;
+  width: clamp(190px, 20vw, 250px);
+  border: 1px solid rgba(21, 21, 21, 0.10);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.98);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  will-change: transform, opacity;
+  pointer-events: none;
+}
+
+@media (max-width: 900px) {
+  .statement-card {
+    display: none;
+  }
+}
+
+/* ── Accessibility: Reduced Motion ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 

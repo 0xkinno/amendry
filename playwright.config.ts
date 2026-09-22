@@ -1,5 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
+const CHROMIUM_PATH = "C:\\Users\\hp\\AppData\\Local\\ms-playwright\\chromium-1234\\chrome-win64\\chrome.exe";
+
 export default defineConfig({
   testDir: "./tests/e2e",
   fullyParallel: true,
@@ -14,15 +16,32 @@ export default defineConfig({
   projects: [
     {
       name: "Desktop Chrome",
-      use: { ...devices["Desktop Chrome"] },
+      use: {
+        ...devices["Desktop Chrome"],
+        launchOptions: {
+          executablePath: CHROMIUM_PATH,
+        },
+      },
     },
     {
-      name: "Tablet Safari",
-      use: { ...devices["iPad (gen 7)"] },
+      name: "Tablet Chromium",
+      use: {
+        ...devices["iPad (gen 7)"],
+        defaultBrowserType: "chromium",
+        launchOptions: {
+          executablePath: CHROMIUM_PATH,
+        },
+      },
     },
     {
-      name: "Mobile iPhone 14",
-      use: { ...devices["iPhone 14"] },
+      name: "Mobile Chromium",
+      use: {
+        ...devices["iPhone 14"],
+        defaultBrowserType: "chromium",
+        launchOptions: {
+          executablePath: CHROMIUM_PATH,
+        },
+      },
     },
   ],
   webServer: {

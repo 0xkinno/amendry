@@ -5,6 +5,8 @@ import Workspace from "./pages/Workspace";
 import Tender from "./pages/Tender";
 import Proof from "./pages/Proof";
 import Judges from "./pages/Judges";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 
 export default function App() {
   return (
@@ -12,6 +14,8 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Landing />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/app" element={<Workspace />} />
           <Route path="/app/tenders/:id" element={<Tender />} />
           <Route path="/app/tenders/:id/changes" element={<Tender />} />

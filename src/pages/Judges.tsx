@@ -91,7 +91,7 @@ export default function Judges() {
               <p className="text-xs uppercase tracking-wide text-muted mb-2" style={{ letterSpacing: "0.12em" }}>
                 Evaluation Desk & Verification Console
               </p>
-              <h1>Judge Mode — Live Technical Evaluation</h1>
+              <h1>Judge & Evaluator Mode — Live Technical Evaluation</h1>
               <p className="text-sm text-muted mt-2" style={{ maxWidth: 700 }}>
                 Test and verify Amendry's primary technical invariant in real time: when a tender source changes, the system computes the exact blast radius, invalidates derived work, and refuses to certify false readiness.
               </p>
@@ -206,7 +206,7 @@ export default function Judges() {
         {/* ── TAB 1: INTERACTIVE DEMO ─────────────────────────── */}
         {activeTab === "demo" && (
           <div>
-            <div className="grid grid-2 gap-8 mb-8">
+            <div className="grid grid-3 gap-6 mb-8">
               {/* Step A */}
               <div className="card card--ruled">
                 <div className="flex justify-between items-center mb-3">
@@ -215,7 +215,7 @@ export default function Judges() {
                 </div>
                 <h3>1. Seed Verified Tender (Rev 8)</h3>
                 <p className="text-sm text-muted mb-4">
-                  Seeds a complete procurement tender (MTA Station Upgrade) through Revisions 1–8. All 8 mandatory criteria are verified with current evidence, and a submission packet is approved.
+                  Seeds a complete procurement tender (Metropolitan Transit Authority — Station Upgrade & Signaling) through Revisions 1–8. All 8 mandatory criteria are verified with current evidence, and a submission packet is approved.
                 </p>
                 <div className="flex gap-3">
                   <button
@@ -223,10 +223,10 @@ export default function Judges() {
                     onClick={handleSeed}
                     disabled={isSeeding}
                   >
-                    {isSeeding ? "Seeding Workspace..." : "Reset / Load Demo Desk (Rev 8)"}
+                    {isSeeding ? "Seeding Workspace..." : "Seed Demo Workspace (Rev 8)"}
                   </button>
                   <Link to="/app" className="btn btn--secondary">
-                    View Operations Desk →
+                    Operations Desk →
                   </Link>
                 </div>
               </div>
@@ -247,13 +247,31 @@ export default function Judges() {
                     onClick={handleSimulate}
                     disabled={isSimulating}
                   >
-                    {isSimulating ? "Simulating Amendment..." : "Inject Addendum 8 (Rev 9)"}
+                    {isSimulating ? "Simulating Revision 9..." : "Simulate Revision 9 (Addendum 8)"}
                   </button>
+                </div>
+              </div>
+
+              {/* Step C: Attack Suite */}
+              <div className="card card--ruled">
+                <div className="flex justify-between items-center mb-3">
+                  <span className="mono text-xs text-muted">PHASE 3: ADVERSARIAL</span>
+                  <StatusBadge variant="ready">12/12 PASS</StatusBadge>
+                </div>
+                <h3>3. 12-Attack Campaign Suite</h3>
+                <p className="text-sm text-muted mb-4">
+                  Runs the full deterministic 12-vector invariant attack suite verifying TOCTOU lockouts, signature checks, deduplication, and fail-closed readiness.
+                </p>
+                <div className="flex gap-3">
                   <button
-                    className="btn btn--secondary"
-                    onClick={() => setActiveTab("blast-radius")}
+                    className="btn btn--primary"
+                    onClick={() => {
+                      setActiveTab("attacks");
+                      handleRunAttacks();
+                    }}
+                    disabled={isRunningAttacks}
                   >
-                    Inspect Blast Radius →
+                    {isRunningAttacks ? "Executing Attacks..." : "Run 12-Attack Suite"}
                   </button>
                 </div>
               </div>
@@ -266,12 +284,39 @@ export default function Judges() {
                 Notice that at no point does Amendry allow a submission packet compiled for Revision 8 to be submitted against Revision 9. The readiness kernel computes verdicts transactionally without guessing or race conditions.
               </p>
             </div>
+
+            {/* Live Revision Blast Radius & Invalidation */}
+            <div className="mt-8">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 style={{ fontSize: "1.25rem", margin: 0 }}>Live Revision Blast Radius & Invalidation</h2>
+                  <p className="text-xs text-muted mt-1">
+                    Addendum 8 (Simulated Revision 9) · Causal Blast Radius Graph
+                  </p>
+                </div>
+                <span className="mono text-xs" style={{ background: "#fee2e2", color: "#991b1b", padding: "4px 8px", borderRadius: 4 }}>
+                  Public Liability Insurance Raised → STALE (Invalidated)
+                </span>
+              </div>
+              <ImpactGraph revisionNumber={9} supersededRevisionNumber={8} />
+            </div>
           </div>
         )}
 
         {/* ── TAB 2: BLAST RADIUS VISUALIZER ───────────────────── */}
         {activeTab === "blast-radius" && (
           <div>
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 style={{ fontSize: "1.25rem", margin: 0 }}>Live Revision Blast Radius & Invalidation</h2>
+                <p className="text-xs text-muted mt-1">
+                  Addendum 8 (Simulated Revision 9) · Causal Blast Radius Graph
+                </p>
+              </div>
+              <span className="mono text-xs" style={{ background: "#fee2e2", color: "#991b1b", padding: "4px 8px", borderRadius: 4 }}>
+                Public Liability Insurance Raised → STALE (Invalidated)
+              </span>
+            </div>
             <ImpactGraph revisionNumber={9} supersededRevisionNumber={8} />
           </div>
         )}

@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { requireTender } from "./lib/auth";
-import { amendmentStatus, impactKind } from "./lib/validators";
+import { impactKind } from "./lib/validators";
 
 /**
  * P3.5 — Amendments + impact application (invalidation).
@@ -110,7 +110,6 @@ export const review = mutation({
     }
 
     const now = Date.now();
-    const invalidationCount = 0;
 
     for (const entry of amendment.impact) {
       if (entry.kind === "UNCHANGED") continue;

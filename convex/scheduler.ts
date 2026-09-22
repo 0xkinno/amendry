@@ -19,7 +19,7 @@ const crons = cronJobs();
 crons.interval(
   "monitor active tenders",
   { minutes: 5 },
-  api.scheduler.monitorAll,
+  api.monitorAll.monitorAll,
 );
 
 export default crons;

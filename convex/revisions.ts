@@ -1,7 +1,7 @@
 import { v } from "convex/values";
 import { query, mutation } from "./_generated/server";
 import { requireTender } from "./lib/auth";
-import { revisionKind, revisionStatus } from "./lib/validators";
+import { revisionKind } from "./lib/validators";
 
 /**
  * P3.2 — Revisions: create / advance / supersede + proof events.
@@ -175,7 +175,7 @@ export const heartbeat = mutation({
     sourceEventId: v.id("sourceEvents"),
   },
   handler: async (ctx, args) => {
-    const { tender } = await requireTender(ctx, args.tenderId);
+    await requireTender(ctx, args.tenderId);
     const now = Date.now();
     await ctx.db.patch(args.tenderId, {
       sourceState: "UNCHANGED",

@@ -1,7 +1,7 @@
 {
   "testId": "amendry-verified-release-manifest",
-  "createdAt": "2026-09-22T10:04:41.505Z",
-  "commit": "local",
+  "createdAt": "2026-09-22T13:47:22.211Z",
+  "commit": "1cd32df6dee0bee6239e470c9131e76957caaa21",
   "environment": "vitest + node + convex",
   "input": "Complete verification execution: unit tests, attack campaign, benchmark corpus, offline proofs, copy/secret scan",
   "expected": "All unit tests pass (83/83), 12 attacks pass, 12 benchmark scenarios pass with 0 false-ready escapes, 0 type errors",

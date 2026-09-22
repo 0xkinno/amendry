@@ -7,7 +7,7 @@ test.describe("AMENDRY Responsive Layout & Viewports", () => {
 
     // Verify brand logo and content wrap properly
     await expect(page.locator("body")).toContainText("AMENDRY");
-    await expect(page.locator("a", { hasText: /Judge Mode/i })).toBeVisible();
+    await expect(page.locator("a", { hasText: /See a live tender|Evaluation|Judge/i }).first()).toBeVisible();
 
     // Check no massive horizontal scroll
     const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);

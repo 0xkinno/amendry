@@ -1,14 +1,12 @@
 import { v } from "convex/values";
 import { action, type ActionCtx } from "../_generated/server";
 import { api } from "../_generated/api";
-import { idempotencyKey, stageKey } from "../lib/idempotency";
 import { hashSource } from "../lib/hashes";
 import { diffRequirements } from "../lib/revisionDiff";
 import type { RequirementStateKind } from "../lib/readinessKernel";
 import type { Doc } from "../_generated/dataModel";
 import {
   getOpenAI,
-  requireParsed,
   SYSTEM_GUARDRAILS,
   wrapUntrusted,
   MODELS,
@@ -16,8 +14,6 @@ import {
   describeOpenAIError,
 } from "../lib/openai";
 import { tenderRequirementExtraction, validateModelOutput, extractJson } from "../lib/modelSchemas";
-import { limitOrThrow } from "../lib/rateLimit";
-import { components } from "../_generated/api";
 
 /**
  * P5.1 — Ingest workflow.
@@ -33,12 +29,9 @@ export const ingestTender = action({
   args: {
     tenderId: v.id("tenders"),
   },
-  handler: async (ctx, args) => {
+  handler: async (ctx, args): Promise<any> => {
     const tender = await ctx.runQuery(api.tenders.get, { tenderId: args.tenderId });
     if (!tender) throw new Error("Tender not found.");
-
-    const now = Date.now();
-    const workflowKey = stageKey(args.tenderId, tender.currentRevisionId ?? "none", "INGEST");
 
     // Record workflow start.
     const workflowId = await ctx.runMutation(api.ingest.recordWorkflowStart, {
@@ -136,7 +129,7 @@ export const ingestTender = action({
         await ctx.runMutation(api.requirements.upsertBatch, {
           tenderId: args.tenderId,
           revisionId: newRevisionId,
-          requirements: extracted,
+          requirements: extracted as any,
         });
       }
 

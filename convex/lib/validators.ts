@@ -189,6 +189,7 @@ export const proofKind = v.union(
   v.literal("WORKFLOW_RESUMED"),
   v.literal("WORKFLOW_FAILED"),
   v.literal("IDEMPOTENT_REPLAY"),
+  v.literal("CERTIFICATE_ISSUED"),
 );
 
 /** Reusable nested object validators. */

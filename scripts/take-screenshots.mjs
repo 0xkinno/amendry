@@ -47,9 +47,10 @@ async function main() {
     await page.waitForTimeout(1000);
     const bannerPath = path.join(screenshotsDir, "banner.png");
     await page.screenshot({ path: bannerPath, fullPage: false });
-    // Also copy to public/banner.png
-    fs.copyFileSync(bannerPath, path.join(publicDir, "banner.png"));
-    console.log(`  [OK] Saved ${bannerPath}`);
+    // Also save as 01-landing-hero.png
+    const landingHeroPath = path.join(screenshotsDir, "01-landing-hero.png");
+    fs.copyFileSync(bannerPath, landingHeroPath);
+    console.log(`  [OK] Saved ${landingHeroPath}`);
 
     // 2. Operations Desk (/app)
     console.log("Navigating to /app (Operations Desk)...");
@@ -81,13 +82,16 @@ async function main() {
     await page.screenshot({ path: judgePath, fullPage: false });
     console.log(`  [OK] Saved ${judgePath}`);
 
-    // 4. Proof Room
+    // 5. Proof Room
     console.log("Navigating to /proof (Cryptographic Proof Room)...");
     await page.goto(`${baseUrl}/proof`, { waitUntil: "networkidle" });
     await page.waitForTimeout(1500);
     const proofPath = path.join(screenshotsDir, "04-proof-ledger.png");
     await page.screenshot({ path: proofPath, fullPage: false });
+    const proofCertPath = path.join(screenshotsDir, "04-proof-certificate.png");
+    fs.copyFileSync(proofPath, proofCertPath);
     console.log(`  [OK] Saved ${proofPath}`);
+    console.log(`  [OK] Saved ${proofCertPath}`);
 
     console.log("\n================================================================================");
     console.log("ALL 5 HIGH-RESOLUTION SCREENSHOTS CAPTURED SUCCESSFULLY!");

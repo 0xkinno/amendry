@@ -80,7 +80,7 @@ export async function requireTender(
 /** Same guarantee for any workspace-scoped table. */
 export async function requireOwned<T extends WorkspaceScopedTable>(
   ctx: Ctx,
-  table: T,
+  _table: T,
   id: Id<T>,
 ): Promise<{ doc: Doc<T>; workspace: Doc<"workspaces"> }> {
   const doc = (await ctx.db.get(id)) as (Doc<T> & { workspaceId: Id<"workspaces"> }) | null;

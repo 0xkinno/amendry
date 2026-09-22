@@ -141,7 +141,7 @@ export const update = mutation({
     monitorIntervalMs: v.optional(v.number()),
   },
   handler: async (ctx, args) => {
-    const { tender, workspace } = await requireTender(ctx, args.tenderId);
+    const { workspace } = await requireTender(ctx, args.tenderId);
     const userId = await requireUserId(ctx);
     const now = Date.now();
 

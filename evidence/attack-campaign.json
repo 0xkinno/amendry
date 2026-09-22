@@ -6,7 +6,7 @@
     "expected": "Kernel blocks with PACKAGE_REVISION_MISMATCH; zero false READY escape",
     "verdict": "PASS",
     "detail": "Status: BLOCKED, Blocking: PACKAGE_REVISION_MISMATCH, EVIDENCE_REVISION_MISMATCH",
-    "timestamp": "2026-09-22T11:31:13.528Z"
+    "timestamp": "2026-09-22T13:47:12.621Z"
   },
   {
     "id": "A02",
@@ -15,7 +15,7 @@
     "expected": "Content hash & normalized hash match identically; duplicate revision avoided",
     "verdict": "PASS",
     "detail": "Hash: ee81b541fb4a1186... matches replayed hash",
-    "timestamp": "2026-09-22T11:31:13.531Z"
+    "timestamp": "2026-09-22T13:47:12.624Z"
   },
   {
     "id": "A03",
@@ -24,7 +24,7 @@
     "expected": "Deterministic idempotency key matches; duplicate processing intercepted",
     "verdict": "PASS",
     "detail": "Key: openai:parse:message:event-evt_991823",
-    "timestamp": "2026-09-22T11:31:13.532Z"
+    "timestamp": "2026-09-22T13:47:12.624Z"
   },
   {
     "id": "A04",
@@ -33,7 +33,7 @@
     "expected": "Receipt key prevents secondary outbound email dispatch",
     "verdict": "PASS",
     "detail": "Receipt Key: agentmail:clarification:clar_123:hash:hash_v9",
-    "timestamp": "2026-09-22T11:31:13.532Z"
+    "timestamp": "2026-09-22T13:47:12.624Z"
   },
   {
     "id": "A05",
@@ -42,7 +42,7 @@
     "expected": "Stage checkpoint receipt persists; resumes without duplicate extraction call",
     "verdict": "PASS",
     "detail": "Stage Key: workflow:tender:t1:revision:rev8:stage:EXTRACT",
-    "timestamp": "2026-09-22T11:31:13.532Z"
+    "timestamp": "2026-09-22T13:47:12.624Z"
   },
   {
     "id": "A06",
@@ -51,7 +51,7 @@
     "expected": "Kernel explicitly transitions to SOURCE_UNAVAILABLE; never guesses unchanged",
     "verdict": "PASS",
     "detail": "Verdict: BLOCKED, Code: SOURCE_UNAVAILABLE enforced",
-    "timestamp": "2026-09-22T11:31:13.535Z"
+    "timestamp": "2026-09-22T13:47:12.625Z"
   },
   {
     "id": "A07",
@@ -60,7 +60,7 @@
     "expected": "Zod schema validation rejects output; triggers controlled failure without data corruption",
     "verdict": "PASS",
     "detail": "Validation ok: false, Issues caught: 7",
-    "timestamp": "2026-09-22T11:31:13.547Z"
+    "timestamp": "2026-09-22T13:47:12.632Z"
   },
   {
     "id": "A08",
@@ -69,7 +69,7 @@
     "expected": "Kernel registers OPEN conflict and fail-closed blocks readiness until human resolution",
     "verdict": "PASS",
     "detail": "Verdict: BLOCKED, Blocked on open conflict: true",
-    "timestamp": "2026-09-22T11:31:13.547Z"
+    "timestamp": "2026-09-22T13:47:12.632Z"
   },
   {
     "id": "A09",
@@ -78,7 +78,7 @@
     "expected": "Evidence status STALE blocks mandatory requirement; readiness BLOCKED",
     "verdict": "PASS",
     "detail": "Verdict: BLOCKED, Blocked requirement: req_ins",
-    "timestamp": "2026-09-22T11:31:13.548Z"
+    "timestamp": "2026-09-22T13:47:12.633Z"
   },
   {
     "id": "A10",
@@ -87,7 +87,7 @@
     "expected": "Historical revisions are immutable; only new superseding revision can be created",
     "verdict": "PASS",
     "detail": "Immutability invariant enforced by revision chain",
-    "timestamp": "2026-09-22T11:31:13.548Z"
+    "timestamp": "2026-09-22T13:47:12.633Z"
   },
   {
     "id": "A11",
@@ -96,7 +96,7 @@
     "expected": "Rate limiter enforces token bucket ceiling; blocks requests over limit",
     "verdict": "PASS",
     "detail": "Processed: 5, Blocked after: 5",
-    "timestamp": "2026-09-22T11:31:13.548Z"
+    "timestamp": "2026-09-22T13:47:12.633Z"
   },
   {
     "id": "A12",
@@ -105,6 +105,6 @@
     "expected": "Digest recomputation detects revision mismatch; signature rejected",
     "verdict": "PASS",
     "detail": "Real Rev 8: 3b5c0ab456df9839e3e2d626 ≠ Forged Rev 9: db04888fb38650d08ea47137",
-    "timestamp": "2026-09-22T11:31:13.548Z"
+    "timestamp": "2026-09-22T13:47:12.633Z"
   }
 ]

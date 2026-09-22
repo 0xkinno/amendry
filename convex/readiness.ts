@@ -4,7 +4,6 @@ import type { Doc, Id } from "./_generated/dataModel";
 import { requireTender } from "./lib/auth";
 import {
   evaluateReadiness,
-  effectiveApprovalState,
   type ReadinessInput,
   type RequirementState,
   type EvidenceState,
