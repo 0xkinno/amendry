@@ -14,9 +14,9 @@
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
     "resolveJsonModule": true,
-    "types": ["node"]
+    "types": ["node"],
+    "jsx": "react-jsx"
   },
   "include": ["./**/*.ts"],
-  "exclude": ["./_generated"],
-  "jsx": "react-jsx"
+  "exclude": ["./_generated"]
 }

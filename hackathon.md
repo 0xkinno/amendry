@@ -7,6 +7,13 @@
 ## Hackathon
 Convex × OpenAI All Gas Hackathon (2026)
 
+## Public URLs
+- **Production Site**: [https://hushed-curlew-671.convex.site](https://hushed-curlew-671.convex.site)
+- **Judge Evaluation Sandbox**: [https://hushed-curlew-671.convex.site/judges](https://hushed-curlew-671.convex.site/judges)
+- **Proof Room**: [https://hushed-curlew-671.convex.site/proof](https://hushed-curlew-671.convex.site/proof)
+- **Convex Backend**: [https://hushed-curlew-671.convex.cloud](https://hushed-curlew-671.convex.cloud)
+- **GitHub Repository**: [https://github.com/0xkinno/amendry](https://github.com/0xkinno/amendry)
+
 ## One-Line Thesis
 > Amendry prevents a tender submission packet from becoming invalid or disqualified when the external source of truth issues an addendum or changes criteria.
 

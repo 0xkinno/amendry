@@ -23,14 +23,14 @@ Amendry is a **live tender integrity desk** that monitors external procurement p
 
 | Resource | Link / Location | Description |
 | :--- | :--- | :--- |
-| **Interactive Application** | [`http://localhost:5173/`](http://localhost:5173/) | Live local development and evaluation environment |
-| **Judge Evaluation Sandbox** | [`http://localhost:5173/judges`](http://localhost:5173/judges) | 1-click demo seed, live amendment injection, attack runner |
-| **Operations Desk** | [`http://localhost:5173/app`](http://localhost:5173/app) | Active tender workspace, revision feeds, and readiness matrix |
-| **Cryptographic Proof Room** | [`http://localhost:5173/proof`](http://localhost:5173/proof) | Append-only audit events, SHA-256 parent lineage, offline verifier |
+| **Live Production Deployment** | [https://hushed-curlew-671.convex.site](https://hushed-curlew-671.convex.site) | Public static hosting on Convex with reactive cloud backend |
+| **Live Judge Evaluation Sandbox** | [https://hushed-curlew-671.convex.site/judges](https://hushed-curlew-671.convex.site/judges) | 1-click demo seed, live amendment injection, attack runner |
+| **Local Interactive Desk** | [`http://localhost:5173/`](http://localhost:5173/) | Local development desk (`npm run dev:frontend`) |
+| **Cryptographic Proof Room** | [https://hushed-curlew-671.convex.site/proof](https://hushed-curlew-671.convex.site/proof) | Append-only audit events, SHA-256 parent lineage, offline verifier |
 | **Integrity Benchmark Report** | [`benchmark/results.md`](benchmark/results.md) | 12-scenario empirical benchmark: 0% escape rate vs 91.7% baseline |
 | **Adversarial Attack Suite** | [`scripts/attack-campaign.mjs`](scripts/attack-campaign.mjs) | 12-vector adversarial attack suite (A01–A12) |
 | **Offline Proof Verifier** | [`scripts/verify-proof.mjs`](scripts/verify-proof.mjs) | Standalone mathematical verification of hashes and invariants |
-| **Convex Backend** | [`convex/`](convex/) | Realtime mutations, schema, workflows, and readiness kernel |
+| **Convex Backend Cloud** | [https://hushed-curlew-671.convex.cloud](https://hushed-curlew-671.convex.cloud) | Realtime mutations, schema, workflows, and readiness kernel |
 
 ---
 

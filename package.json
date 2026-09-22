@@ -9,7 +9,7 @@
     "dev": "concurrently -k \"npm:dev:backend\" \"npm:dev:frontend\"",
     "dev:backend": "convex dev --tail-logs always",
     "dev:frontend": "vite",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false && tsc -p convex --noEmit --pretty false",
     "test": "vitest run",
