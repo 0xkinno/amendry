@@ -36,8 +36,6 @@ Amendry is a **live tender integrity desk** that monitors external procurement p
 | **Offline Proof Verifier** | [`scripts/verify-proof.mjs`](scripts/verify-proof.mjs) | Standalone mathematical verification of hashes and invariants |
 | **Convex Backend Cloud** | [https://hushed-curlew-671.convex.cloud](https://hushed-curlew-671.convex.cloud) | Realtime mutations, schema, workflows, and readiness kernel |
 
----
-
 ![AMENDRY Banner](docs/screenshots/banner.png)
 
 ---
@@ -83,8 +81,8 @@ Evaluators can verify the entire integrity lifecycle in under 2 minutes without 
 <table width="100%">
   <tr>
     <td width="50%" align="center">
-      <img src="docs/screenshots/01-landing-hero.png" alt="Editorial Landing & Hero" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
-      <br /><sub><strong>1. Editorial Landing & Hero (`/`)</strong></sub>
+      <img src="docs/screenshots/01-operations-desk.png" alt="Operations Desk & Monitored Portals" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
+      <br /><sub><strong>1. Operations Desk (`/app`)</strong></sub>
     </td>
     <td width="50%" align="center">
       <img src="docs/screenshots/02-tender-blast-radius.png" alt="Revision Blast Radius" style="width:100%; border-radius:6px; border:1px solid #e2e8f0;" />
